@@ -24,7 +24,8 @@ app.set('trust proxy', true);
 
 /* ------------- Begin Controller Functions ------------- */
 
-router.post('/email', function (req, res) {
+router.get('/email', function (req, res) {
+    res.send("confirmed"); 
 });
 
 
