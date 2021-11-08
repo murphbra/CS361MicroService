@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 const nodeMailer = require('nodemailer'); 
 app.set('trust proxy', true); 
 /* ------------- Begin Nodemailer Functions ------------- */
-let transporter = nodemailer.createTransport({
+let transporter = nodeMailer.createTransport({
     service: 'gmail',
     auth: {
         type: 'OAuth2',
