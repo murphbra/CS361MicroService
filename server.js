@@ -2,6 +2,8 @@
 //CS 361 Microservice
 //sources cited: this code draws from tutorial provided at: 
 //https://www.freecodecamp.org/news/use-nodemailer-to-send-emails-from-your-node-js-server/
+//https://www.npmjs.com/package/dotenv
+//
 
 const environment = require('dotenv').config(); 
 const express = require('express');
@@ -50,7 +52,7 @@ router.post('email', function (req, res){
         res.status(415).json({'Error': 'Server only accepts application/json data.'}).end(); 
         return; 
     }
-    
+
     if(req.body.from === undefined)
     {
         res.status(400).json({'Error': 'The request object is missing the from attribute.'})
