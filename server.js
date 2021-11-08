@@ -1,32 +1,86 @@
 //Author: Brayden Murphy
 //CS 361 Microservice
+//sources cited: this code draws from tutorial provided at: 
+//https://www.freecodecamp.org/news/use-nodemailer-to-send-emails-from-your-node-js-server/
 
-const json2html = require('json-to-html');
+const environment = require('dotenv').config(); 
 const express = require('express');
 const app = express();
-const { Datastore } = require('@google-cloud/datastore');
 const bodyParser = require('body-parser');
-const datastore = new Datastore();
 const router = express.Router();
 app.use(bodyParser.json());
-function fromDatastore(item) {
-    item.id = item[Datastore.KEY].id;
-    return item;
-}
+const nodeMailer = require('nodemailer'); 
 app.set('trust proxy', true); 
-/* ------------- Begin Lodging Model Functions ------------- */
+/* ------------- Begin Nodemailer Functions ------------- */
+let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        type: 'OAuth2',
+        user: process.env.MAIL_USERNAME,
+        pass: process.env.MAIL_PASSWORD,
+        clientID: process.env.OAUTH_PASSWORD,
+        clientId: process.env.OAUTH_CLIENTID,
+        clientSecret: process.env.OAUTH_CLIENT_SECRET,
+        refreshToken: process.env.OAUTH_REFRESH_TOKEN
+    }
+}); 
 
 
-
-
-
-/* ------------- End Model Functions ------------- */
+/* ------------- End Nodemailer Functions ------------- */
 
 /* ------------- Begin Controller Functions ------------- */
 
-router.get('/email', function (req, res) {
-    res.send("confirmed"); 
+router.put('/email', function (req, res){
+    res.set('Accept', 'POST');
+    res.status(405).end();
 });
+
+router.get('/email', function (req, res){
+    res.set('Accept', 'POST');
+    res.status(405).end();
+});
+
+router.patch('/email', function (req, res){
+    res.set('Accept', 'POST');
+    res.status(405).end();
+});
+
+router.post('email', function (req, res){
+    if(req.get('content-type') !== 'application/json'){
+        res.status(415).json({'Error': 'Server only accepts application/json data.'}).end(); 
+        return; 
+    }
+    
+    if(req.body.from === undefined)
+    {
+        res.status(400).json({'Error': 'The request object is missing the from attribute.'})
+    }
+    if(req.body.to === undefined)
+    {
+        res.status(400).json({'Error': 'The request object is missing the to attribute.'})
+    }
+    if(req.body.subject === undefined)
+    {
+        res.status(400).json({'Error': 'The request object is missing the subject attribute.'})
+    }
+    if(req.body.text === undefined)
+    {
+        res.status(400).json({'Error': 'The request object is missing the text attribute.'})
+    }
+    let mailOptions = {
+        from: req.body.from, 
+        to: req.body.to,
+        subject: req.body.subject,
+        text: req.body.text
+    };
+    transporter.sendMail(mailOptions, function(err,data){
+        if (err) {
+            res.status(400).json({'Error': "Error is: " + err}); 
+        } else {
+            res.status(200); 
+        }
+    })
+}); 
 
 
 /* ------------- End Controller Functions ------------- */
