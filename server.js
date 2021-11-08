@@ -46,7 +46,7 @@ router.patch('/email', function (req, res){
     res.status(405).end();
 });
 
-router.post('email', function (req, res){
+router.post('/email', function (req, res){
     if(req.get('content-type') !== 'application/json'){
         res.status(415).json({'Error': 'Server only accepts application/json data.'}).end(); 
         return; 
