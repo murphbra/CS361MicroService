@@ -79,7 +79,7 @@ router.post('/email', function (req, res){
         if (err) {
             res.status(400).json({'Error': "Error is: " + err}); 
         } else {
-            res.status(200); 
+            res.status(200).end(); 
         }
     })
 }); 
