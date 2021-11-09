@@ -5,15 +5,13 @@
 //https://www.npmjs.com/package/dotenv
 //
 
-const dotenv = require('dotenv').config(); 
+require('dotenv').config(); 
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const router = express.Router();
 app.use(bodyParser.json());
 const nodeMailer = require('nodemailer'); 
-const { google } = require('googleapis'); 
-app.set('trust proxy', true); 
 /* ------------- Begin Nodemailer Functions ------------- */
 let transporter = nodeMailer.createTransport({
     service: 'gmail',
@@ -38,8 +36,7 @@ router.put('/email', function (req, res){
 });
 
 router.get('/email', function (req, res){
-    res.set('Accept', 'POST');
-    res.status(405).end();
+    res.send(process.env.MAIL_USERNAME); 
 });
 
 router.patch('/email', function (req, res){
