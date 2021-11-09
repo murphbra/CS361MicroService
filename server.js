@@ -3,15 +3,14 @@
 //sources cited: this code draws from tutorial provided at: 
 //https://www.freecodecamp.org/news/use-nodemailer-to-send-emails-from-your-node-js-server/
 //https://www.npmjs.com/package/dotenv
-//
 
-require('dotenv').config(); 
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const router = express.Router();
 app.use(bodyParser.json());
 const nodeMailer = require('nodemailer'); 
+require('dotenv').config(); 
 /* ------------- Begin Nodemailer Functions ------------- */
 let transporter = nodeMailer.createTransport({
     service: 'gmail',
