@@ -5,7 +5,7 @@
 //https://www.npmjs.com/package/dotenv
 //
 
-const environment = require('dotenv').config(); 
+const dotenv = require('dotenv').config(); 
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
