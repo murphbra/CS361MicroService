@@ -50,10 +50,6 @@ router.post('/email', function (req, res){
         return; 
     }
 
-    if(req.body.from === undefined)
-    {
-        res.status(400).json({'Error': 'The request object is missing the from attribute.'}).end(); 
-    }
     if(req.body.to === undefined)
     {
         res.status(400).json({'Error': 'The request object is missing the to attribute.'}).end(); 
@@ -67,7 +63,7 @@ router.post('/email', function (req, res){
         res.status(400).json({'Error': 'The request object is missing the text attribute.'}).end(); 
     }
     let mailOptions = {
-        from: req.body.from, 
+        from: process.env.MAIL_USERNAME, 
         to: req.body.to,
         subject: req.body.subject,
         text: req.body.text
