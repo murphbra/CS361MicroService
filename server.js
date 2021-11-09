@@ -16,11 +16,11 @@ let transporter = nodeMailer.createTransport({
     service: 'gmail',
     auth: {
         type: 'OAuth2',
-        user: "cs361microservicebraydenmurphy@gmail.com",
-        clientId: "1043862098383-3ksheja8ochdubre3joccgkfs5bkmlm3.apps.googleusercontent.com",
-        clientSecret: "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",
-        refreshToken: "1//04sOTLPAx6bymCgYIARAAGAQSNwF-L9IrcvMcT8A464SVYRN1m-MZRk634NDusc0Us8KIL74CAQ3_6PRf5zXW3C10Ed6ZiQ25BXc", 
-        accessToken: "ya29.a0ARrdaM9iEjX9StTaUmUgIj901hNg_eyIW1pqNSwTSGt9NvZTPeNRT7DgZIFsBdHb9e8fL-wo-9FAiEpxXliPxZDTuSQvz1HuyCJECb8V1b04n9SokLr16_9b31WjipazW0Ik5_YauphANQL2TjGKJVUhbc02"
+        user: process.env.MAIL_USERNAME,
+        clientId: process.env.OAUTH_CLIENTID,
+        clientSecret: process.env.OAUTH_CLIENT_SECRET,
+        refreshToken: process.env.OAUTH_REFRESH_TOKEN, 
+        accessToken: process.env.OAUTH_ACCESS_TOKEN
     }
 }); 
 
@@ -35,7 +35,8 @@ router.put('/email', function (req, res){
 });
 
 router.get('/email', function (req, res){
-    res.send(process.env.MAIL_USERNAME); 
+    res.set('Accept', 'POST');
+    res.status(405).end(); 
 });
 
 router.patch('/email', function (req, res){
