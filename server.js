@@ -12,6 +12,7 @@ const bodyParser = require('body-parser');
 const router = express.Router();
 app.use(bodyParser.json());
 const nodeMailer = require('nodemailer'); 
+const { google } = require('googleapis'); 
 app.set('trust proxy', true); 
 /* ------------- Begin Nodemailer Functions ------------- */
 let transporter = nodeMailer.createTransport({
@@ -19,11 +20,10 @@ let transporter = nodeMailer.createTransport({
     auth: {
         type: 'OAuth2',
         user: process.env.MAIL_USERNAME,
-        pass: process.env.MAIL_PASSWORD,
         clientId: process.env.OAUTH_CLIENTID,
         clientSecret: process.env.OAUTH_CLIENT_SECRET,
-        refreshToken: process.env.OAUTH_REFRESH_TOKEN,
-        accessToken: process.env.OAUTH_ACCESS_TOKEN
+        refreshToken: process.env.OAUTH_REFRESH_TOKEN, 
+        accessToken: process.env.OAUTH_ACCESS_TOKEN 
     }
 }); 
 
@@ -55,19 +55,19 @@ router.post('/email', function (req, res){
 
     if(req.body.from === undefined)
     {
-        res.status(400).json({'Error': 'The request object is missing the from attribute.'})
+        res.status(400).json({'Error': 'The request object is missing the from attribute.'}).end(); 
     }
     if(req.body.to === undefined)
     {
-        res.status(400).json({'Error': 'The request object is missing the to attribute.'})
+        res.status(400).json({'Error': 'The request object is missing the to attribute.'}).end(); 
     }
     if(req.body.subject === undefined)
     {
-        res.status(400).json({'Error': 'The request object is missing the subject attribute.'})
+        res.status(400).json({'Error': 'The request object is missing the subject attribute.'}).end(); 
     }
     if(req.body.text === undefined)
     {
-        res.status(400).json({'Error': 'The request object is missing the text attribute.'})
+        res.status(400).json({'Error': 'The request object is missing the text attribute.'}).end(); 
     }
     let mailOptions = {
         from: process.env.MAIL_USERNAME, 
