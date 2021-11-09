@@ -67,7 +67,7 @@ router.post('/email', function (req, res){
         res.status(400).json({'Error': 'The request object is missing the text attribute.'}).end(); 
     }
     let mailOptions = {
-        from: "cs361microservicebraydenmurphy@gmail.com", 
+        from: req.body.from, 
         to: req.body.to,
         subject: req.body.subject,
         text: req.body.text
