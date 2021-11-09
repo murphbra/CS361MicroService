@@ -17,12 +17,12 @@ app.set('trust proxy', true);
 let transporter = nodeMailer.createTransport({
     service: 'gmail',
     auth: {
-        type: 'OAuth2',
+        //type: 'OAuth2',
         user: process.env.MAIL_USERNAME,
         pass: process.env.MAIL_PASSWORD,
-        clientId: process.env.OAUTH_CLIENTID,
-        clientSecret: process.env.OAUTH_CLIENT_SECRET,
-        refreshToken: process.env.OAUTH_REFRESH_TOKEN
+        //clientId: process.env.OAUTH_CLIENTID,
+        //clientSecret: process.env.OAUTH_CLIENT_SECRET,
+        //refreshToken: process.env.OAUTH_REFRESH_TOKEN
     }
 }); 
 
@@ -69,7 +69,7 @@ router.post('/email', function (req, res){
         res.status(400).json({'Error': 'The request object is missing the text attribute.'})
     }
     let mailOptions = {
-        from: req.body.from, 
+        from: process.env.MAIL_USERNAME, 
         to: req.body.to,
         subject: req.body.subject,
         text: req.body.text
