@@ -8,7 +8,9 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const router = express.Router();
+const cors = require('cors'); 
 app.use(bodyParser.json());
+app.use(cors()); 
 const nodeMailer = require('nodemailer'); 
 require('dotenv').config(); 
 /* ------------- Begin Nodemailer Functions ------------- */
